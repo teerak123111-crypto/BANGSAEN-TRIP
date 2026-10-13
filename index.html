@@ -199,6 +199,22 @@ html.lite #rider img,html.lite #rider #back{filter:none}
 html.lite #panel{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(255,251,242,.94)}
 html.lite #end .card{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(255,251,242,.92)}
 
+/* ---------- phone landscape: smaller UI so it does not cover the scene ---------- */
+@media (max-height:520px){
+  #snd{padding:5px 10px 5px 6px;font-size:.7rem;gap:5px;left:calc(10px + env(safe-area-inset-left,0px));bottom:calc(8px + env(safe-area-inset-bottom,0px));box-shadow:0 3px 10px rgba(0,0,0,.18)}
+  #snd .ic{width:16px;height:16px;font-size:.6rem}
+  #snd #sndz{display:none!important}
+  #go{top:calc(4vh + env(safe-area-inset-top,0px));padding:4px 14px 6px;border-radius:14px;max-width:calc(100vw - 120px)}
+  #go .t{font-size:clamp(.75rem,2.2vw,.95rem);margin-top:0}
+  #go .k{font-size:.58rem}
+  .pin .dot{width:24px;height:24px;font-size:11px;border-width:1.5px}
+  .pin .dot::after{inset:-5px}
+  .pin .lbl{padding:3px 9px;font-size:.68rem}
+  .pin{gap:5px}
+  #act{padding:6px 14px;font-size:.75rem;bottom:calc(8px + env(safe-area-inset-bottom,0px))}
+  #hint{padding:5px 12px;font-size:.72rem;bottom:calc(8px + env(safe-area-inset-bottom,0px))}
+  #panel header h3{font-size:1.15rem}
+}
 /* ---------- phone: landscape only ---------- */
 #rot{display:none;position:fixed;inset:0;z-index:9999;background:#2F5D96;color:#fff;text-align:center;align-items:center;justify-content:center;flex-direction:column;gap:18px;padding:24px;font-family:"Kanit","Anuphan",sans-serif}
 #rot .ph{width:56px;height:96px;border:5px solid #fff;border-radius:12px;animation:rotph 2.4s ease-in-out infinite}
