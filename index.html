@@ -71,13 +71,13 @@ button{font:inherit;color:inherit;cursor:pointer}
 
 #go{position:absolute;left:50%;top:calc(9vh + env(safe-area-inset-top,0px));transform:translate(-50%,-10px);z-index:6;pointer-events:none;opacity:0;
   text-align:center;padding:12px 26px 14px;border-radius:22px;max-width:calc(100vw - 32px);
-  background:rgba(255,251,244,.84);-webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);
+  background:rgba(255,251,244,.93);
   border:1px solid rgba(255,255,255,.7);box-shadow:0 10px 30px rgba(40,30,20,.22);color:#1F1B16;text-shadow:none}
 #go .k{font-size:.78rem;letter-spacing:.16em;color:var(--accent);font-weight:600}
 #go .t{font-family:"Kanit","Anuphan",sans-serif;font-weight:700;font-size:clamp(1.15rem,3vw,2.1rem);line-height:1.25;margin-top:2px}
 #snd{position:fixed;left:calc(16px + env(safe-area-inset-left,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:45;display:flex;align-items:center;gap:8px;
   border:1px solid rgba(255,255,255,.5);border-radius:999px;padding:9px 16px 9px 12px;font-weight:600;font-size:.9rem;color:#2E2A24;
-  background:rgba(255,251,244,.86);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 6px 18px rgba(0,0,0,.18)}
+  background:rgba(255,251,244,.94);box-shadow:0 6px 18px rgba(0,0,0,.18)}
 #snd .ic{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff;font-size:.8rem}
 #snd #sndz{font-weight:400;color:#3A332A;font-size:.78rem;display:none}
 #snd.on #sndz{display:inline}
@@ -688,13 +688,14 @@ function render(){
   });
 
   if(ch!==lastCh){
+    for(let k=Math.max(0,ch-1);k<=Math.min(N-1,ch+2);k++){const im=scenesEl[k]&&scenesEl[k].querySelector('img.bg');if(im&&!im._dec){im._dec=1;im.loading='eager';im.decode&&im.decode().catch(()=>{});}}
     const s=SCENES[ch],act=$('act');
     if(s.pin){act.textContent=s.pin.label;act.onclick=()=>openPanel(s.pin.panel,act);}
     act.classList.toggle('show',false);
     lastCh=ch;
   }
   const gv=along('g',0,wx),lv=along('light',1,wx);
-  {const go=gv.toFixed(2);if(go!==frame._go){frame._go=go;$('grade').style.opacity=go;}
+  {const go=gv.toFixed(2);if(go!==frame._go){frame._go=go;const G=$('grade');G.style.opacity=go;G.style.display=go==='0.00'?'none':'';}
    const rf=`brightness(${(lv*(1-gv*.1)).toFixed(2)}) sepia(${(gv*.35).toFixed(2)}) saturate(${(.95+gv*.15).toFixed(2)})`;if(rf!==frame._rf){frame._rf=rf;$('rider').style.filter=rf;}}
   const p=sCur/total;
   $('hint').style.opacity=0;
@@ -1130,7 +1131,7 @@ function frame(){
     if(el._t===t)return;el._t=t;
     const X=(r.f0+(r.f1-r.f0)*t)-r.Mw/3;
     el.style.maskPosition=el.style.webkitMaskPosition=`${X.toFixed(1)}px 0, 0 0`;
-    r.rim.style.backgroundPosition=`${X.toFixed(1)}px 0`;r.rim.style.opacity=(.5*Math.sin(Math.PI*t)).toFixed(2);});
+    const ro=.5*Math.sin(Math.PI*t);r.rim.style.display=ro<.01?'none':'';if(ro>=.01){r.rim.style.backgroundPosition=`${X.toFixed(1)}px 0`;r.rim.style.opacity=ro.toFixed(2);}});
   $('rider').style.top=(base+along('dy',0,cur+riderX)*vh)+'px';
   {const sc=SCENES[clamp(Math.floor((cur+riderX+SW*OV*.5)/STEP),0,N-1)];Music.setZone(ZONE_OF[sc.key]);
    const leg=segs.find(g=>cur+riderX>=g.start&&cur+riderX<g.end);
